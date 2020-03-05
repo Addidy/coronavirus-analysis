@@ -95,7 +95,6 @@ class Analyzer:
         plt.plot(self.data['current_infected'+append][since_x_days_ago:upto_x_days_ago], color='purple', label='current infected')
         plt.plot(self.data['confirmed'+append][since_x_days_ago:upto_x_days_ago], color='orange', linestyle='dashed', label='confirmed total')
         plt.plot(self.data['recovered'+append][since_x_days_ago:upto_x_days_ago], color='green', label='recovered')
-        #plt.fmt_xdata = mdates.DateFormatter('%Y-%m-%d')
         plt.show()
 
 
