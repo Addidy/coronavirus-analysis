@@ -74,6 +74,7 @@ class Analyzer:
         else:
             for column in columns:
                 plt.plot(self.data[column][-since_x_days_ago:len(self.data[column]) - upto_x_days_ago], label=column)
+            plt.gcf().autofmt_xdate()
             plt.show()
 
     def graph_totals(self, since_x_days_ago=0, upto_x_days_ago=0):
@@ -95,6 +96,7 @@ class Analyzer:
         plt.plot(self.data['current_infected'+append][since_x_days_ago:upto_x_days_ago], color='purple', label='current infected')
         plt.plot(self.data['confirmed'+append][since_x_days_ago:upto_x_days_ago], color='orange', linestyle='dashed', label='confirmed total')
         plt.plot(self.data['recovered'+append][since_x_days_ago:upto_x_days_ago], color='green', label='recovered')
+        plt.gcf().autofmt_xdate()
         plt.show()
 
 
