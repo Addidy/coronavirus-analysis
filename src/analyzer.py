@@ -7,6 +7,8 @@ import numpy as np
 
 class Analyzer:
 
+    STATES = ['confirmed', 'death', 'recovered', 'current_infected']
+
     data = False
     include_country_regions = []
     exclude_country_regions = []
@@ -29,26 +31,25 @@ class Analyzer:
 
         self.data['current_infected_total'] = self.data['confirmed_total'] - self.data['death_total'] - self.data['recovered_total']
 
-        states = ['confirmed', 'death', 'recovered', 'current_infected']
-        self._gen_change_data(states)
-        self._gen_change_pct_data(states)
-        self._gen_change_pct_avg_data(states)
+        self._gen_change_data()
+        self._gen_change_pct_data()
+        self._gen_change_pct_avg_data()
 
         # self.data['confirmed_change%3a']
 
         self.data['lethality'] = self.data['death_total'] / self.data['recovered_total']
 
-    def _gen_change_data(self, states):
-        for state in states:
+    def _gen_change_data(self):
+        for state in self.STATES:
             self.data[state+'_change'] = self.data[state+'_total'].diff()
 
-    def _gen_change_pct_data(self, states):
-        for state in states:
+    def _gen_change_pct_data(self):
+        for state in self.STATES:
             self.data[state+'_change%'] = self.data[state+'_total'].pct_change()
 
-    def _gen_change_pct_avg_data(self, states):
-        for state in states:
-            self.data[state+'_change%3a'] = self.data[state+'_change%'].rolling(window=4, min_periods=0).mean()
+    def _gen_change_pct_avg_data(self, window=5):
+        for state in self.STATES:
+            self.data[state+'_change%'+str(window)+'a'] = self.data[state+'_change%'].rolling(window=window, min_periods=0).mean()
 
     def _clean_data(self, data):
         for country_region in self.exclude_country_regions:
@@ -86,8 +87,9 @@ class Analyzer:
     def graph_changes_pct(self, since_x_days_ago=0, upto_x_days_ago=0):
         self.graph_append('_change%', since_x_days_ago, upto_x_days_ago)
 
-    def graph_changes_pct_avg(self, since_x_days_ago=0, upto_x_days_ago=0):
-        self.graph_append('_change%3a', since_x_days_ago, upto_x_days_ago)
+    def graph_changes_pct_avg(self, since_x_days_ago=0, upto_x_days_ago=0, window=5):
+        self._gen_change_pct_avg_data(window)
+        self.graph_append('_change%'+str(window)+'a', since_x_days_ago, upto_x_days_ago)
 
     def graph_append(self, append='', since_x_days_ago=0, upto_x_days_ago=0):
         since_x_days_ago = -since_x_days_ago
