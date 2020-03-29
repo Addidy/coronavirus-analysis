@@ -2,7 +2,6 @@
 Data science project to gather insights on the progression of the Coronavirus
 
 TODO:
-* Investigate and Fix change in dataset structure
 * Predictive calculation for current day results
 * compare results against individual country population
 * predict peak infections

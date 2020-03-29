@@ -18,10 +18,9 @@ def fetch_virus_data():
         print('No Data found.\nPerforming first time setup...\nDownloading Data... (This can take a minute)')
         Repo.clone_from("https://github.com/CSSEGISandData/COVID-19.git", "./datasets")
         print('Setup Complete.')
-    # return dataframe
-    confirmed = pd.read_csv('./datasets/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv')
-    deaths    = pd.read_csv('./datasets/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv')
-    recovered = pd.read_csv('./datasets/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv')
+    confirmed = pd.read_csv('./datasets/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv')
+    deaths    = pd.read_csv('./datasets/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv')
+    recovered = pd.read_csv('./datasets/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv')
     return confirmed, deaths, recovered
 
 
